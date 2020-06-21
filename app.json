@@ -1,0 +1,16 @@
+{
+  "name": "Entry Demonstration",
+  "description": "Simple entry app for testing out some stuff.",
+  "repository": "https://github.com/HarvestProfit/just-an-entries-example",
+  "logo": "https://www.harvestprofit.com/apple-touch-icon.png",
+  "keywords": ["rails"],
+  "buildpacks": [
+    { "url": "heroku/nodejs" },
+    { "url": "heroku/ruby" }
+  ],
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "heroku-redis:hobby-dev",
+    "rollbar:free"
+  ]
+}

@@ -63,4 +63,4 @@ Minitest tests can be found in the [test](./test) directory.
 
 ## Initial Deployment
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HarvestProfit/marketingplan)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HarvestProfit/just-an-entries-example)
