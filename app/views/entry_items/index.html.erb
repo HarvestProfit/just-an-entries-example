@@ -1,13 +1,9 @@
 <p></p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @entry.date || 'N/A' %>
-</p>
+<h1><%= @entry.name %></h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @entry.name %>
+<p class="lead">
+  Accounts debited and credited for this transaction.
 </p>
 
 <div class="table-responsive mt-5">
@@ -22,7 +18,7 @@
     </thead>
 
     <tbody>
-      <% @entry.entry_items.each do |entry_item| %>
+      <% @entry_items.each do |entry_item| %>
         <tr>
           <td class="align-middle"><%= entry_item.account ? entry_item.account.name : 'N/A' %></td>
           <td class="align-middle text-success"><%= entry_item.debit? ? number_to_currency(entry_item.amount) : '' %></td>
@@ -35,5 +31,8 @@
   </table>
 </div>
 
-<%= link_to 'Edit', edit_entry_path(@entry) %> |
-<%= link_to 'Back', entries_path %>
+<br>
+
+<%= link_to 'New Debit/Credit', new_entry_entry_item_path(@entry), class: 'btn btn-primary' %>
+<%= link_to 'Back to Entry', edit_entry_path(@entry), class: 'btn btn-secondary' %>
+
