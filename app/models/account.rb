@@ -1,31 +1,17 @@
 # Accounts group entries together
 class Account < ApplicationRecord
-  has_many :debits,
-           inverse_of: :debit_account,
-           dependent: :destroy,
-           class_name: '::Entry',
-           foreign_key: 'debit_account_id'
-  has_many :credits,
-           inverse_of: :credit_account,
-           dependent: :destroy,
-           class_name: '::Entry',
-           foreign_key: 'credit_account_id'
+  has_many :entry_items, dependent: :destroy
+  has_many :entries, through: :entry_items
 
   def credit_total
-    credits.sum(:credit)
+    entry_items.where(type: 'EntryItems::Credit').sum(:amount)
   end
 
   def debit_total
-    debits.sum(:debit)
+    entry_items.where(type: 'EntryItems::Debit').sum(:amount)
   end
 
   def balance
     debit_total - credit_total
-  end
-
-  def entries
-    Entry.where(debit_account_id: id).or(
-      Entry.where(credit_account_id: id)
-    ).order(date: :desc)
   end
 end

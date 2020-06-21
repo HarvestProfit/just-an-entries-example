@@ -1,0 +1,32 @@
+<%= form_with(model: [entry_item.entry, entry_item], local: true) do |form| %>
+  <% if entry_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(entry_item.errors.count, "error") %> prohibited this entry_item from being saved:</h2>
+
+      <ul>
+        <% entry_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="col">
+    <%= form.label :type, class: 'form-label' %>
+    <%= form.select :type, [['Debit', 'EntryItems::Debit'], ['Credit', 'EntryItems::Credit']], { include_blank: 'N/A' }, class: 'form-select' %>
+  </div>
+
+  <div class="col">
+    <%= form.label :account_id, class: 'form-label' %>
+    <%= form.select :account_id, Account.all.collect {|a| [ a.name, a.id ] }, { include_blank: 'N/A' }, class: 'form-select' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :amount, class: 'form-label' %>
+    <%= form.number_field :amount, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

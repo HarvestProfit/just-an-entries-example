@@ -13,10 +13,7 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>Debit Account</th>
-        <th>Credit Account</th>
         <th>Name</th>
-        <th>Amount</th>
         <th>Debit</th>
         <th>Credit</th>
         <th colspan="2"></th>
@@ -24,21 +21,18 @@
     </thead>
 
     <tbody>
-      <% @account.entries.each do |entry| %>
+      <% @account.entry_items.each do |entry_item| %>
         <tr>
-          <td class="align-middle"><%= entry.date %></td>
-          <td class="align-middle"><%= entry.debit_account&.name %></td>
-          <td class="align-middle"><%= entry.credit_account&.name %></td>
-          <td class="align-middle"><%= entry.name %></td>
-          <td class="align-middle"><%= number_to_currency(entry.amount) %></td>
-          <td class="align-middle text-success"><%= number_to_currency(entry.debit) %></td>
-          <td class="align-middle text-danger"><%= number_to_currency(entry.credit) %></td>
-          <td><%= link_to 'Edit', edit_entry_path(entry), class: 'btn btn-primary btn-sm' %></td>
-          <td><%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+          <td class="align-middle"><%= entry_item.entry.date %></td>
+          <td class="align-middle"><%= entry_item.entry.name %></td>
+          <td class="align-middle text-success"><%= entry_item.debit? ? number_to_currency(entry_item.amount) : '' %></td>
+          <td class="align-middle text-danger"><%= entry_item.credit? ? number_to_currency(entry_item.amount) : '' %></td>
+          <td><%= link_to 'Edit', edit_entry_path(entry_item.entry), class: 'btn btn-primary btn-sm' %></td>
+          <td><%= link_to 'Destroy', entry_item.entry, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
         </tr>
       <% end %>
       <tr>
-        <td colspan="5"><b>Total</b></td>
+        <td colspan="2"><b>Total</b></td>
         <td class="align-middle text-success"><%= number_to_currency(@account.debit_total) %></td>
         <td class="align-middle text-danger"><%= number_to_currency(@account.credit_total) %></td>
         <td colspan="2"></td>

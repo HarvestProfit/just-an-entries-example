@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_20_232603) do
+ActiveRecord::Schema.define(version: 2020_06_21_222938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,18 +22,25 @@ ActiveRecord::Schema.define(version: 2020_06_20_232603) do
   end
 
   create_table "entries", force: :cascade do |t|
-    t.integer "debit_account_id"
-    t.integer "credit_account_id"
     t.string "name"
     t.decimal "amount", default: "0.0", null: false
-    t.decimal "debit", default: "0.0", null: false
-    t.decimal "credit", default: "0.0", null: false
     t.date "date"
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "entries", "accounts", column: "credit_account_id"
-  add_foreign_key "entries", "accounts", column: "debit_account_id"
+  create_table "entry_items", force: :cascade do |t|
+    t.bigint "entry_id", null: false
+    t.bigint "account_id"
+    t.string "type"
+    t.decimal "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_entry_items_on_account_id"
+    t.index ["entry_id"], name: "index_entry_items_on_entry_id"
+  end
+
+  add_foreign_key "entry_items", "accounts"
+  add_foreign_key "entry_items", "entries"
 end

@@ -26,30 +26,11 @@
     <%= form.number_field :amount, class: 'form-control' %>
   </div>
 
-  <div class="row mb-3">
-    <div class="col">
-      <%= form.label :debit_account_id, class: 'form-label' %>
-      <%= form.select :debit_account_id, Account.all.collect {|a| [ a.name, a.id ] }, { include_blank: 'N/A' }, class: 'form-select' %>
-    </div>
-
-    <div class="col">
-      <%= form.label :credit_account_id, class: 'form-label' %>
-      <%= form.select :credit_account_id, Account.all.collect {|a| [ a.name, a.id ] }, { include_blank: 'N/A' }, class: 'form-select' %>
-    </div>
+  <div class="mb-3">
+    <a href="<%= entry_entry_items_path(@entry) %>" class="btn btn-primary btn-block">
+      Manage Debits and Credits
+    </a>
   </div>
-
-  <div class="row mb-3">
-    <div class="col">
-      <%= form.label :debit, class: 'form-label' %>
-      <%= form.number_field :debit, class: 'form-control' %>
-    </div>
-
-    <div class="col">
-      <%= form.label :credit, class: 'form-label' %>
-      <%= form.number_field :credit, class: 'form-control' %>
-    </div>
-  </div>
-
 
   <div class="mb-3">
     <%= form.submit class: 'btn btn-primary' %>
@@ -58,13 +39,4 @@
 
 <script type="text/javascript">
 window.flatpickr("#entry_date", {});
-
-var amountInput = document.getElementById('entry_amount');
-var creditInput = document.getElementById('entry_credit');
-var debitInput = document.getElementById('entry_debit');
-
-amountInput.addEventListener('input', function() {
-  creditInput.value = amountInput.value;
-  debitInput.value = amountInput.value;
-});
 </script>

@@ -68,6 +68,6 @@ class EntriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def entry_params
-    params.require(:entry).permit(:debit_account_id, :credit_account_id, :name, :amount, :debit, :credit, :date)
+    params.require(:entry).permit(:debit_account_id, :credit_account_id, :name, :amount, :date)
   end
 end

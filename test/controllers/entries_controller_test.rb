@@ -22,11 +22,8 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Entry.count') do
       post entries_url, params: {
         entry: {
-          debit_account_id: @entry.debit_account_id,
-          credit_account_id: @entry.credit_account_id,
-          credit: @entry.credit,
-          debit: @entry.debit,
-          name: @entry.name
+          name: @entry.name,
+          amount: 10.00
         }
       }
     end
@@ -47,10 +44,7 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
   test 'should update entry' do
     patch entry_url(@entry), params: {
       entry: {
-        debit_account_id: @entry.debit_account_id,
-        credit_account_id: @entry.credit_account_id,
-        credit: @entry.credit,
-        debit: @entry.debit,
+        amount: 10.00,
         name: @entry.name
       }
     }
