@@ -1,0 +1,90 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:12
+        ports: ['5432:5432']
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    # Ruby and Bundler Deps
+    - name: Set up Ruby 2.7
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+    - name: Load Ruby Cache
+      uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Install bundler
+      run: |
+        sudo apt-get -yqq install libpq-dev
+        gem install bundler
+    - name: Bundle install
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    # Node and Yarn Deps
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.16.3
+    - name: Find yarn cache location
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: Load JS Cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: Yarn install
+      run: |
+        yarn install --pure-lockfile
+    # Test setup
+    - name: Setup database
+      env:
+        DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/just_an_entries_example_test
+        RAILS_ENV: test
+      run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+    - name: Setup assets cache
+      uses: actions/cache@v2
+      with:
+        path: public/packs-test
+        key: ${{ runner.os }}-assets
+        restore-keys: |
+          ${{ runner.os }}-assets
+    - name: Setup assets
+      env:
+        RAILS_ENV: test
+      run: |
+        bundle exec rails assets:precompile assets:clean
+    # Tests
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/just_an_entries_example_test
+        RAILS_ENV: test
+      run: |
+        bundle exec rails db:create
+        bundle exec rails db:migrate
+        bundle exec rails test

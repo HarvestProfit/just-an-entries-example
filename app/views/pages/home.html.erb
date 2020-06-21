@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<div class="card text-white bg-dark text-center border border-light" style="min-height: 25vh;">
+  <div class="card-body d-flex justify-content-center align-items-center">
+    <div>
+      <h1>Accounting examples</h1>
+      <p class="lead">Simple examples for how different accounting-type setups can work</p>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+  <div class="col">
+    <% if @accounts.size.positive? %>
+      <%= render partial: 'pages/home/accounts', locals: { accounts: @accounts } %>
+    <% else %>
+      <%= render partial: 'pages/home/empty_card', locals: { type: 'Accounts', path: new_account_path } %>
+    <% end %>
+  </div>
+  <div class="col">
+    <% if @accounts.size.zero? %>
+      <%= render partial: 'pages/home/empty_card', locals: { type: 'Accounts', path: new_account_path } %>
+    <% elsif @entries.size.positive? %>
+      <%= render partial: 'pages/home/entries', locals: { entries: @entries } %>
+    <% else %>
+      <%= render partial: 'pages/home/empty_card', locals: { type: 'Entries', path: new_entry_path } %>
+    <% end %>
+  </div>
+</div>
+

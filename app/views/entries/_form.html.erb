@@ -1,0 +1,70 @@
+<%= form_with(model: entry, local: true) do |form| %>
+  <% if entry.errors.any? %>
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">
+        <%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:
+      </h4>
+      <% entry.errors.full_messages.each.with_index do |message, index| %>
+        <hr />
+        <p class="<%= entry.errors.count == (index + 1) ? 'mb-0' : '' %>"><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :date, class: 'form-label' %>
+    <%= form.date_field :date, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :amount, class: 'form-label' %>
+    <%= form.number_field :amount, class: 'form-control' %>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :debit_account_id, class: 'form-label' %>
+      <%= form.select :debit_account_id, Account.all.collect {|a| [ a.name, a.id ] }, { include_blank: 'N/A' }, class: 'form-select' %>
+    </div>
+
+    <div class="col">
+      <%= form.label :credit_account_id, class: 'form-label' %>
+      <%= form.select :credit_account_id, Account.all.collect {|a| [ a.name, a.id ] }, { include_blank: 'N/A' }, class: 'form-select' %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :debit, class: 'form-label' %>
+      <%= form.number_field :debit, class: 'form-control' %>
+    </div>
+
+    <div class="col">
+      <%= form.label :credit, class: 'form-label' %>
+      <%= form.number_field :credit, class: 'form-control' %>
+    </div>
+  </div>
+
+
+  <div class="mb-3">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+window.flatpickr("#entry_date", {});
+
+var amountInput = document.getElementById('entry_amount');
+var creditInput = document.getElementById('entry_credit');
+var debitInput = document.getElementById('entry_debit');
+
+amountInput.addEventListener('input', function() {
+  creditInput.value = amountInput.value;
+  debitInput.value = amountInput.value;
+});
+</script>

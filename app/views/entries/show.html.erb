@@ -1,0 +1,29 @@
+<p></p>
+
+<p>
+  <strong>Debit Account:</strong>
+  <%= @entry.debit_account ? @entry.debit_account.name : 'N/A' %>
+</p>
+
+<p>
+  <strong>Credit Account:</strong>
+  <%= @entry.credit_account ? @entry.credit_account.name : 'N/A' %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @entry.name %>
+</p>
+
+<p>
+  <strong>Debit:</strong>
+  <%= @entry.debit %>
+</p>
+
+<p>
+  <strong>Credit:</strong>
+  <%= @entry.credit %>
+</p>
+
+<%= link_to 'Edit', edit_entry_path(@entry) %> |
+<%= link_to 'Back', entries_path %>

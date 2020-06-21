@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-image: none;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headerToggle" aria-controls="headerToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="headerToggle">
+      <ul class="navbar-nav mr-auto my-2 my-lg-0">
+        <li class="nav-item">
+          <%= link_to 'Home', root_path, class: current_nav_link_class(root_path) %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Accounts', accounts_path, class: current_nav_link_class(accounts_path) %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Entries', entries_path, class: current_nav_link_class(entries_path) %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

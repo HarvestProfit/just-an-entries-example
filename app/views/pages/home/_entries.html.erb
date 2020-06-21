@@ -1,0 +1,19 @@
+<div class="card bg-dark">
+  <div class="card-header">
+    <strong>
+      Recent Entries
+    </strong>
+  </div>
+  <div class="list-group list-group-flush">
+    <% entries.each do |entry| %>
+      <% cache entry do %>
+        <%= render partial: 'pages/home/entry', locals: { entry: entry } %>
+      <% end %>
+    <% end %>
+    <div class="list-group-item bg-dark" >
+      <a class="btn btn-block btn-outline-primary" href="<%= new_entry_path %>">
+        Add new entry
+      </a>
+    </div>
+  </div>
+</div>

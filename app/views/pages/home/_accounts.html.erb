@@ -1,0 +1,19 @@
+<div class="card bg-dark">
+  <div class="card-header">
+    <strong>
+      Recent accounts
+    </strong>
+  </div>
+  <div class="list-group list-group-flush">
+    <% accounts.each do |account| %>
+      <% cache account do %>
+        <%= render partial: 'pages/home/account', locals: { account: account } %>
+      <% end %>
+    <% end %>
+    <div class="list-group-item bg-dark" >
+      <a class="btn btn-block btn-outline-primary" href="<%= new_account_path %>">
+        Add new account
+      </a>
+    </div>
+  </div>
+</div>

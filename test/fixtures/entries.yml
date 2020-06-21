@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+entry_one:
+  debit_account: account_debit
+  credit_account: account_credit
+  name: By some coffee
+  debit: 20.00
+  credit: 20.00
+

@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+account_credit:
+  name: Cash
+
+account_debit:
+  name: Household expenses

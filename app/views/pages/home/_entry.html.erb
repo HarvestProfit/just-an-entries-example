@@ -1,0 +1,9 @@
+<a class="list-group-item list-group-item-action d-flex justify-content-between bg-dark text-light" href="<%= edit_entry_path(entry) %>">
+  <span class="d-flex align-items-center">
+    <span class="badge bg-secondary mr-2">
+      <%= entry.date %>
+    </span>
+    <%= entry.name %>
+  </span>
+  <%= number_to_currency(entry.amount) %>
+</a>
