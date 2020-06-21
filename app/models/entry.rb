@@ -1,7 +1,7 @@
 # Each individual entry
 class Entry < ApplicationRecord
-  belongs_to :debit_account, class_name: '::Account', optional: true
-  belongs_to :credit_account, class_name: '::Account', optional: true
+  belongs_to :debit_account, class_name: '::Account', optional: true, touch: true
+  belongs_to :credit_account, class_name: '::Account', optional: true, touch: true
 
   validates :credit, presence: true
   validates :debit, presence: true
